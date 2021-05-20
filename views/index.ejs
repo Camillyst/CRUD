@@ -4,20 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="/css/style.css"> 
     <title>Cadastro</title>
+
   </head>
   <body>
     <div class="container"> 
         <h1 class="text-center">Cadastro de Clientes</h1>
-        <a href="/new" class="btn btn-success">Cadastrar Cliente</a>
-        <form method="GET" action="/search">
-            <input type="text" name="buscar" placeholder="Procure pelo nome do usuário cadastrado...">
-            <a href="/search" name="search" class="btn btn-secundary">Pesquisar</a>
+        <div id="div-btn">
+        <a href="/new" id="btn-cadastrar" class="btn btn-success">Cadastrar Cliente</a>
+      </div>
+        <form method="GET" class="search" action="/search">
+            <input type="text" class="search-input" name="id" placeholder="Procure pelo ID do usuário cadastrado...">
+            <input type="submit" value= "Pesquisar" class="btn btn-secundary">
           </form>
-        <table class="table table-hover text-center">
+        <table class="table table-dark table-hover text-center">
             <thead>
                 <tr>
+                  <th>ID</th>
                   <th scope="col">Nome</th>
                   <th scope="col">Sobrenome</th>
                   <th scope="col">Email</th>
@@ -27,9 +31,12 @@
               <tbody>
                   <% usuarios.forEach(usuario => { %>
                 <tr>
-                  <th> 
+                  <td>
+                    <%=usuario.id %> 
+                  </td>
+                  <td> 
                       <%= usuario.nome %> 
-                  </th>
+                  </td>
                   <td> 
                     <%= usuario.sobrenome %>
                   </td>
@@ -37,8 +44,8 @@
                     <%= usuario.Email%>
                   </td>
                   <td>
-                    <td><a href="/edit/<%= usuario.id  %> " class="btn btn-dark">Editar</a>
-                        <a href="/delete/ <%= usuario.id %> " class="btn btn-danger">Deletar</a></td>
+                    <a href="/edit/<%= usuario.id  %> " class="btn btn-dark">Editar</a>
+                        <a href="/delete/ <%= usuario.id %> " class="btn btn-danger">Deletar</a>
                   </td>
                 </tr>
                 <% }) %> 

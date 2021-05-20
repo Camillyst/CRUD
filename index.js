@@ -4,18 +4,23 @@ const connection = require("./database/database");
 const CadastroBD = require("./database/cadastrobd");
 const bodyParser = require("body-parser");
 
+app.use('/css', express.static('css'));
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.set("view engine", "ejs");
-app.use(express.static("public"));
-
+app.use(express.static("/"));
 
 connection.authenticate().then(() => {
     console.log("database connect!");
 }).catch((erro) => {
     console.log(erro);
 });
+
+app.get('../public/css/style.css', (req, res) => {
+    res.render('../public/css/style')
+})
 
 app.get("/", (req, res) => { 
     CadastroBD.findAll().then((usuarios) => {
@@ -80,11 +85,12 @@ app.get("/delete/:id", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-    var nome = req.body.search
-    console.log(nome);
-    
-    CadastroBD.findOne({nome}).then((id) => {
-        res.render("search", {id})
+    var id = req.query.id;
+        
+    CadastroBD.findOne({
+        where: { id : id }
+    }).then((usuario) => {
+        res.render("search", { usuario: usuario });
     })
 });
 
